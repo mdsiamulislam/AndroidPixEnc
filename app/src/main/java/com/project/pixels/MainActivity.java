@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    public int seed = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView imgPreView;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap originalBitmap;
     private int[] pixelsArray;
+    EditText password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,16 @@ public class MainActivity extends AppCompatActivity {
         selectBtn = findViewById(R.id.selectBtn);
         downloadBtn = findViewById(R.id.downloadBtn);
         progressBar = findViewById(R.id.progressBar);
+        password = findViewById(R.id.password);
+
+
 
         selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseImage();
+                seed = password.getText().toString().hashCode();
+                    chooseImage();
+
             }
         });
 
@@ -124,9 +133,8 @@ public class MainActivity extends AppCompatActivity {
             int length = pixelsArray.length;
             int start = 0;
             int end = length - 1;
-
             // Generate random values based on pixel data
-            Random random = new Random("Siam".hashCode());
+            Random random = new Random(seed);
 
             int[] numbers = new int[length];
             boolean[] used = new boolean[length];
@@ -149,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             for (int i = 0; i < length; i++) {
-                numbers[i] = pixelsArray[numbers[i]];
+               numbers[i] = pixelsArray[numbers[i]];
             }
 
 
@@ -170,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveImage(Bitmap bitmap) {
         // Save bitmap as image file
-        String filename = "pixel_image.jpg";
+        String filename = "encrypted.jpg";
         File file = new File(getExternalFilesDir(null), filename);
 
         FileOutputStream fos = null;

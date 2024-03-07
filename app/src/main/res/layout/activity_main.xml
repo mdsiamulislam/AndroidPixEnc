@@ -7,52 +7,86 @@
     tools:context=".MainActivity"
     android:gravity="center">
 
-    <ProgressBar
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"/>
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="50dp">
 
-    <Button
-        android:id="@+id/selectBtn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Select"
-        />
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/imgPreView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/selectBtn"/>
-    <EditText
-        android:visibility="gone"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:layout_below="@+id/imgPreView"
-        android:id="@+id/password"
-        />
-    <Button
-        android:id="@+id/downloadBtn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Download"
-        android:layout_below="@+id/password"
-        android:visibility="gone"
-        />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="85 Pixels"
+                    android:textSize="50sp"
+                    android:fontFamily="@font/pixels"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/downloadBtn"
-        android:id="@+id/progress"
-        android:text="progress"
-        />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="File Encryption"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/pixels"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="normal"/>
+            </LinearLayout>
+            
+        </LinearLayout>
 
+        <EditText
+            android:id="@+id/password"
+            android:visibility="visible"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/enter_password"
+            android:fontFamily="@font/pixels"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/selectBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/select_image"
+            android:fontFamily="@font/pixels"
+            />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgPreView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="10dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/downloadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/download_encrypted_image"
+            android:visibility="gone"
+            android:fontFamily="@font/pixels"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
