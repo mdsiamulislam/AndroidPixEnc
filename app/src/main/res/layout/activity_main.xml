@@ -7,6 +7,11 @@
     tools:context=".MainActivity"
     android:gravity="center">
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"/>
+
     <Button
         android:id="@+id/selectBtn"
         android:layout_width="200dp"
@@ -21,13 +26,32 @@
         android:src="@mipmap/ic_launcher"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/selectBtn"/>
+    <EditText
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:layout_below="@+id/imgPreView"
+        android:id="@+id/password"
+        />
     <Button
         android:id="@+id/downloadBtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Download"
-        android:layout_below="@+id/imgPreView"
+        android:layout_below="@+id/password"
         android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/downloadBtn"
+        android:id="@+id/progress"
+        android:text="progress"
         />
 
 
