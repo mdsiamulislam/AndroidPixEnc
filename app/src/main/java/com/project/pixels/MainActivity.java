@@ -17,10 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,14 +44,18 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         password = findViewById(R.id.password);
 
-
-
         selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 seed = password.getText().toString().hashCode();
-                    chooseImage();
+                password.getText().clear();
 
+                if (seed > 0){
+                    Toast.makeText(MainActivity.this, "Select Image For Encryption", Toast.LENGTH_SHORT).show();
+                    chooseImage();
+                }else {
+                    Toast.makeText(MainActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (originalBitmap != null) {
                     saveImage(originalBitmap);
+                    imgPreView.setVisibility(View.GONE);
+                    downloadBtn.setVisibility(View.GONE);
                 } else {
                     showToast("No image selected");
                 }
@@ -156,14 +159,40 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            for (int i = 0; i < length; i++) {
-               numbers[i] = pixelsArray[numbers[i]];
+            // Divide the task into smaller chunks for parallel execution
+            int numThreads = Runtime.getRuntime().availableProcessors();
+            int chunkSize = length / numThreads;
+
+            // Create and start threads
+            Thread[] threads = new Thread[numThreads];
+            for (int i = 0; i < numThreads; i++) {
+                final int startIndex = i * chunkSize;
+                final int endIndex = (i == numThreads - 1) ? length : (i + 1) * chunkSize;
+
+                threads[i] = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int j = startIndex; j < endIndex; j++) {
+                            numbers[j] = pixelsArray[numbers[j]];
+                        }
+                    }
+                });
+                threads[i].start();
             }
 
+            // Wait for all threads to finish
+            try {
+                for (Thread thread : threads) {
+                    thread.join();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             // Create a new bitmap with modified pixel values
             Bitmap newBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             newBitmap.setPixels(numbers, 0, width, 0, 0, width, height);
+
             return newBitmap;
         }
 
